@@ -1,0 +1,46 @@
+﻿<Window x:Class="TruppTafel.View.Dialogs.ManagePersonenDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TruppTafel.View.Dialogs"
+        mc:Ignorable="d"
+        Title="ManagePersonenDialog" Height="300" Width="280"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize">
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1">
+            <Label Grid.Row="1">Ausbildungsgrad:</Label>
+            <ComboBox x:Name="ComboBoxAusbildung" SelectionChanged="ComboBoxAusbildung_OnSelectionChanged">
+                <ComboBoxItem>Zugführer</ComboBoxItem>
+                <ComboBoxItem>Gruppenführer</ComboBoxItem>
+                <ComboBoxItem>Angriffstrupp</ComboBoxItem>
+                <ComboBoxItem>Truppmann</ComboBoxItem>
+                <ComboBoxItem>Truppmann 1/2</ComboBoxItem>
+            </ComboBox>
+            <Label>Name:</Label>
+            <TextBox x:Name="TextBoxPersonenName" LostFocus="TextBlockPersonenName_OnLostFocus" FontWeight="Bold"
+                     FontSize="20">
+            </TextBox>
+        </StackPanel>
+        <Button x:Name="ButtonAcceptDialog" Grid.Row="2"
+                Margin="5,15"
+                HorizontalAlignment="Left"
+                Width="75"
+                IsDefault="True"
+                Click="ButtonAcceptDialog_OnClick" />
+        <Button x:Name="ButtonCancelDialog" Grid.Row="2"
+                Margin="5, 15"
+                HorizontalAlignment="Right"
+                Width="75"
+                Content="Abbrechen"
+                IsCancel="True"
+                Click="ButtonCancelDialog_OnClick" />
+    </Grid>
+</Window>

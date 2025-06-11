@@ -1,0 +1,53 @@
+﻿<Window x:Class="TruppTafel.View.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TruppTafel.View.Windows"
+        xmlns:controls="clr-namespace:TruppTafel.View.Controls"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" MinHeight="450" MinWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="1.5*"></RowDefinition>
+            <RowDefinition Height="55"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ShowGridLines>True</Grid.ShowGridLines>
+        <StackPanel x:Name="StackPanelKeineFahrzeuge" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button x:Name="BtnAddFahrzeug" Content="+" Width="25" Height="25" Click="BtnAddFahrzeug_OnClick" />
+            <Label>Noch keine Fahrzeuge erstellt</Label>
+            <Label>drück auf "+" um eins zu erstellen</Label>
+        </StackPanel>
+        <StackPanel x:Name="StackPanelFahrzeuge" Grid.Row="0" Orientation="Horizontal">
+        </StackPanel>
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5">
+            <Label>Sortieren nach:</Label>
+            <ComboBox SelectedIndex="0">
+                <ComboBoxItem>Ausbildung</ComboBoxItem>
+                <ComboBoxItem>Alphabet</ComboBoxItem>
+            </ComboBox>
+        </WrapPanel>
+        <StackPanel x:Name="StackPanelKeinePersonen" Grid.Row="1" VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Margin="0 35 0 5">
+            <Button x:Name="BtnAddPerson" Content="+" Width="25" Height="25" Click="BtnAddPerson_OnClick" />
+            <Label>Noch keine Personen erstellt</Label>
+            <Label>drück auf "+" um eine zu erstellen</Label>
+        </StackPanel>
+        <WrapPanel Grid.Row="1" x:Name="WrapPanelPersonen" Margin="0 35 0 0"
+                   AllowDrop="True" Drop="WrapPanelPersonen_OnDrop"
+                   DragEnter="WrapPanelPersonen_OnDragEnter"
+                   DragLeave="WrapPanelPersonen_OnDragLeave">
+        </WrapPanel>
+        <Button x:Name="ButtonNeuePerson" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Height="35" Width="120" Margin="15 5" Content="Neue Person" Click="ButtonNeuePerson_OnClick" />
+        
+        <Button x:Name="ButtonNeuesFahrzeug" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                Height="35" Width="120" Margin="15 5" Content="Neues Fahrzeug" Click="ButtonNeuesFahrzeug_OnClick_OnClick" />
+
+        <Button x:Name="ButtonNeuerBesucher" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Height="35" Width="120" Margin="15 5" Content="Neuer Besucher" Click="ButtonNeuerBesucher_OnClick" />
+    </Grid>
+</Window>
