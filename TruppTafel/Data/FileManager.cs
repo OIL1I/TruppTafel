@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents.Serialization;
 using TruppTafel.Logic.Ausbildung;
@@ -30,16 +31,19 @@ public static class FileManager
         RemoveExistingFiles();
 
 
-        foreach (PersonenTafel person in wrapPersonen.Children)
+        foreach (UIElement tafel in wrapPersonen.Children)
         {
-            FileStream fs = new FileStream(_filePathPersonen, FileMode.Append);
-            StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
-            var personvm = person.DataContext as PersonenTafelViewModel;
-            sw.Write($"{personvm.PersonenName}:{personvm.Ausbildung.Name}!");
-            sw.Flush();
-            sw.Close();
-            fs.Dispose();
-            fs.Close();
+            if (tafel is PersonenTafel person)
+            {
+                FileStream fs = new FileStream(_filePathPersonen, FileMode.Append);
+                StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
+                var personvm = person.DataContext as PersonenTafelViewModel;
+                sw.Write($"{personvm.PersonenName}:{personvm.Ausbildung.Name}!");
+                sw.Flush();
+                sw.Close();
+                fs.Dispose();
+                fs.Close();
+            }
         }
 
         foreach (FahrzeugAnsicht fahrzeug in stackFahrzeuge.Children)
@@ -55,7 +59,7 @@ public static class FileManager
         }
     }
 
-    public static void Load(StackPanel stackFahrzeuge, WrapPanel wrapPersonen)
+    public static void Load(FahrzeugeStackPanel stackFahrzeuge, PersonenWrapPanel wrapPersonen)
     {
         if (Directory.Exists(_dataPath) == false)
         {
@@ -102,7 +106,7 @@ public static class FileManager
 
                 var personvm = new PersonenTafelViewModel(lineParts[0], ausbildung);
                 var person = new PersonenTafel(personvm);
-                wrapPersonen.Children.Add(person);
+                wrapPersonen.AddChild(person);
             }
         }
 
@@ -136,7 +140,7 @@ public static class FileManager
 
                 var fahrzeugvm = new FahrzeugAnsichtViewModel(lineParts[0], besatzung);
                 var fahrzeug = new FahrzeugAnsicht(fahrzeugvm);
-                stackFahrzeuge.Children.Add(fahrzeug);
+                stackFahrzeuge.AddChild(fahrzeug);
             }
         }
     }
