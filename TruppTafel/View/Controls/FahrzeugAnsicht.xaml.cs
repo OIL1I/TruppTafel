@@ -13,13 +13,8 @@ namespace TruppTafel.View.Controls;
 
 public partial class FahrzeugAnsicht : UserControl
 {
-    private Point? _startPoint;
-    //private readonly IServiceProvider _serviceProvider;
-    private PersonenTafel _draggedTafel;
-
     public FahrzeugAnsicht(FahrzeugAnsichtViewModel ViewModel)
     {
-        //_serviceProvider = serviceProvider;
         InitializeComponent();
         DataContext = ViewModel;
         ErstelleTabelle(ViewModel.Besatzung);

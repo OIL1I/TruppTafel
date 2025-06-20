@@ -23,8 +23,9 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        WrapPanelPersonen.ChildrenCountChanged += ShouldShowPersonenEmptyPanelHint;
+        StackPanelFahrzeuge.ChildrenCountChanged += ShouldShowFahrzeugeEmptyPanelHint;
         FileManager.Load(StackPanelFahrzeuge, WrapPanelPersonen);
-        ValidateEmptyPanelHint();
     }
 
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
@@ -33,21 +34,24 @@ public partial class MainWindow : Window
         FileManager.Save(StackPanelFahrzeuge, WrapPanelPersonen);
     }
 
-    private void ValidateEmptyPanelHint()
+    private void ShouldShowPersonenEmptyPanelHint(object? sender, EventArgs e)
+    {
+        if (WrapPanelPersonen.Children.Count != 0)
+        {
+            StackPanelKeinePersonen.Visibility = Visibility.Collapsed;
+        }
+        else StackPanelKeinePersonen.Visibility = Visibility.Visible;   
+    }
+    
+    private void ShouldShowFahrzeugeEmptyPanelHint(object? sender, EventArgs e)
     {
         if (StackPanelFahrzeuge.Children.Count != 0)
         {
             StackPanelKeineFahrzeuge.Visibility = Visibility.Collapsed;
         }
         else StackPanelKeineFahrzeuge.Visibility = Visibility.Visible;
-
-        if (WrapPanelPersonen.Children.Count != 0)
-        {
-            StackPanelKeinePersonen.Visibility = Visibility.Collapsed;
-        }
-        else StackPanelKeinePersonen.Visibility = Visibility.Visible;
     }
-
+    
     private void BtnAddPerson_OnClick(object sender, RoutedEventArgs e)
     {
         var result = new ManagePersonenDialog(null, ManagePersonenDialog.ManagePersonenDialogModus.New).ShowDialog();
@@ -56,11 +60,9 @@ public partial class MainWindow : Window
             var neuePerson = new PersonenTafel(new PersonenTafelViewModel(ManagePersonenDialog.NeuePerson.PersonenName,
                 ManagePersonenDialog.NeuePerson.Ausbildung));
             ManagePersonenDialog.NeuePerson = null;
-            WrapPanelPersonen.Children.Add(neuePerson);
+            WrapPanelPersonen.AddChild(neuePerson);
             //TODO: Ordne PersonenTafeln
         }
-
-        ValidateEmptyPanelHint();
     }
 
     private void BtnAddFahrzeug_OnClick(object sender, RoutedEventArgs e)
@@ -70,10 +72,8 @@ public partial class MainWindow : Window
         {
             var neuesFahrzeug = new FahrzeugAnsicht(new FahrzeugAnsichtViewModel(
                 ManageFahrzeugeDialog.NeuesFahrzeug.FahrzeugName, ManageFahrzeugeDialog.NeuesFahrzeug.Besatzung));
-            StackPanelFahrzeuge.Children.Add(neuesFahrzeug);
+            StackPanelFahrzeuge.AddChild(neuesFahrzeug);
         }
-
-        ValidateEmptyPanelHint();
     }
 
     private void WrapPanelPersonen_OnDrop(object sender, DragEventArgs e)
@@ -83,8 +83,7 @@ public partial class MainWindow : Window
             PersonenTafel tafel = (PersonenTafel)e.Data.GetData(typeof(PersonenTafel));
 
             RemoveChildHelper.RemoveChild(tafel.Parent, tafel);
-            WrapPanelPersonen.Children.Add(tafel);
-            ValidateEmptyPanelHint();
+            WrapPanelPersonen.AddChild(tafel);
             WrapPanelPersonen.Background = Brushes.White;
             //TODO: Ordne PersonenTafeln
         }
@@ -92,7 +91,7 @@ public partial class MainWindow : Window
         {
             BesucherPersonenTafel tafel = (BesucherPersonenTafel)e.Data.GetData(typeof(BesucherPersonenTafel));
             RemoveChildHelper.RemoveChild(tafel.Parent, tafel);
-            WrapPanelPersonen.Children.Add(tafel);
+            WrapPanelPersonen.AddChild(tafel);
         }
     }
 
@@ -114,11 +113,9 @@ public partial class MainWindow : Window
             var neuePerson = new PersonenTafel(new PersonenTafelViewModel(ManagePersonenDialog.NeuePerson.PersonenName,
                 ManagePersonenDialog.NeuePerson.Ausbildung));
             ManagePersonenDialog.NeuePerson = null;
-            WrapPanelPersonen.Children.Add(neuePerson);
+            WrapPanelPersonen.AddChild(neuePerson);
             //TODO: Ordne PersonenTafeln
         }
-
-        ValidateEmptyPanelHint();
     }
 
     private void ButtonNeuerBesucher_OnClick(object sender, RoutedEventArgs e)
@@ -134,8 +131,7 @@ public partial class MainWindow : Window
             var neuesFahrzeug = new FahrzeugAnsicht(new FahrzeugAnsichtViewModel(
                 ManageFahrzeugeDialog.NeuesFahrzeug.FahrzeugName, ManageFahrzeugeDialog.NeuesFahrzeug.Besatzung));
             ManageFahrzeugeDialog.NeuesFahrzeug = null;
-            StackPanelFahrzeuge.Children.Add(neuesFahrzeug);
+            StackPanelFahrzeuge.AddChild(neuesFahrzeug);
         }
-        ValidateEmptyPanelHint();
     }
 }

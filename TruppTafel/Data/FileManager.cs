@@ -55,7 +55,7 @@ public static class FileManager
         }
     }
 
-    public static void Load(StackPanel stackFahrzeuge, WrapPanel wrapPersonen)
+    public static void Load(FahrzeugeStackPanel stackFahrzeuge, PersonenWrapPanel wrapPersonen)
     {
         if (Directory.Exists(_dataPath) == false)
         {
@@ -98,7 +98,7 @@ public static class FileManager
 
                 var personvm = new PersonenTafelViewModel(lineParts[0], ausbildung);
                 var person = new PersonenTafel(personvm);
-                wrapPersonen.Children.Add(person);
+                wrapPersonen.AddChild(person);
             }
         }
 
@@ -132,7 +132,7 @@ public static class FileManager
 
                 var fahrzeugvm = new FahrzeugAnsichtViewModel(lineParts[0], besatzung);
                 var fahrzeug = new FahrzeugAnsicht(fahrzeugvm);
-                stackFahrzeuge.Children.Add(fahrzeug);
+                stackFahrzeuge.AddChild(fahrzeug);
             }
         }
     }
