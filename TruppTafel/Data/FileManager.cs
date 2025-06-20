@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents.Serialization;
 using TruppTafel.Logic.Ausbildung;
@@ -30,16 +31,19 @@ public static class FileManager
         RemoveExistingFiles();
 
 
-        foreach (PersonenTafel person in wrapPersonen.Children)
+        foreach (UIElement tafel in wrapPersonen.Children)
         {
-            FileStream fs = new FileStream(_filePathPersonen, FileMode.Append);
-            StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
-            var personvm = person.DataContext as PersonenTafelViewModel;
-            sw.Write($"{personvm.PersonenName}:{personvm.Ausbildung.Name}!");
-            sw.Flush();
-            sw.Close();
-            fs.Dispose();
-            fs.Close();
+            if (tafel is PersonenTafel person)
+            {
+                FileStream fs = new FileStream(_filePathPersonen, FileMode.Append);
+                StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
+                var personvm = person.DataContext as PersonenTafelViewModel;
+                sw.Write($"{personvm.PersonenName}:{personvm.Ausbildung.Name}!");
+                sw.Flush();
+                sw.Close();
+                fs.Dispose();
+                fs.Close();
+            }
         }
 
         foreach (FahrzeugAnsicht fahrzeug in stackFahrzeuge.Children)
