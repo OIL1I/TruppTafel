@@ -21,8 +21,8 @@
             <Label>Noch keine Fahrzeuge erstellt</Label>
             <Label>drück auf "+" um eins zu erstellen</Label>
         </StackPanel>
-        <StackPanel x:Name="StackPanelFahrzeuge" Grid.Row="0" Orientation="Horizontal">
-        </StackPanel>
+        <controls:FahrzeugeStackPanel x:Name="StackPanelFahrzeuge" Grid.Row="0" Orientation="Horizontal">
+        </controls:FahrzeugeStackPanel>
         <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5">
             <Label>Sortieren nach:</Label>
             <ComboBox SelectedIndex="0">
@@ -36,11 +36,11 @@
             <Label>Noch keine Personen erstellt</Label>
             <Label>drück auf "+" um eine zu erstellen</Label>
         </StackPanel>
-        <WrapPanel Grid.Row="1" x:Name="WrapPanelPersonen" Margin="0 35 0 0"
+        <controls:PersonenWrapPanel Grid.Row="1" x:Name="WrapPanelPersonen" Margin="0 35 0 0" 
                    AllowDrop="True" Drop="WrapPanelPersonen_OnDrop"
                    DragEnter="WrapPanelPersonen_OnDragEnter"
                    DragLeave="WrapPanelPersonen_OnDragLeave">
-        </WrapPanel>
+        </controls:PersonenWrapPanel>
         <Button x:Name="ButtonNeuePerson" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"
                 Height="35" Width="120" Margin="15 5" Content="Neue Person" Click="ButtonNeuePerson_OnClick" />
         

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using TruppTafel.View.Controls;
 
 namespace TruppTafel.Logic.Helper
 {
@@ -7,15 +8,22 @@ namespace TruppTafel.Logic.Helper
     {
         public static void RemoveChild(DependencyObject parent, FrameworkElement child)
         {
-            var panel = parent as Panel;
-            if (panel != null)
+            if (parent is PersonenWrapPanel pPanel)
+            {
+                pPanel.RemoveChild(child);
+                return;
+            }
+            if (parent is FahrzeugeStackPanel fPanel)
+            {
+                fPanel.RemoveChild(child);
+                return;
+            }
+            if (parent is Panel panel)
             {
                 panel.Children.Remove(child);
                 return;
             }
-            
-            var decorator = parent as Decorator;
-            if (decorator != null && decorator.Child == child)
+            if (parent is Decorator decorator && decorator.Child == child)
             {
                 decorator.Child = null;
                 return;
