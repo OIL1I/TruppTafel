@@ -20,6 +20,7 @@
             <ComboBox x:Name="ComboBoxAusbildung" SelectionChanged="ComboBoxAusbildung_OnSelectionChanged">
                 <ComboBoxItem>Zugführer</ComboBoxItem>
                 <ComboBoxItem>Gruppenführer</ComboBoxItem>
+                <ComboBoxItem>Truppführer</ComboBoxItem>
                 <ComboBoxItem>Angriffstrupp</ComboBoxItem>
                 <ComboBoxItem>Truppmann</ComboBoxItem>
                 <ComboBoxItem>Truppmann 1/2</ComboBoxItem>

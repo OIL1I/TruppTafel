@@ -7,8 +7,7 @@ namespace TruppTafel.Logic.Helper
     {
         public static void RemoveChild(DependencyObject parent, FrameworkElement child)
         {
-            var panel = parent as Panel;
-            if (panel != null)
+            if (parent is Panel panel)
             {
                 panel.Children.Remove(child);
                 return;

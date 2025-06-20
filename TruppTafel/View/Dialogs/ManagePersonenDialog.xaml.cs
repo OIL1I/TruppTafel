@@ -43,9 +43,10 @@ public partial class ManagePersonenDialog : Window
 
         if (NeuePerson.Ausbildung is ZF) ComboBoxAusbildung.SelectedIndex = 0;
         else if (NeuePerson.Ausbildung is GF) ComboBoxAusbildung.SelectedIndex = 1;
-        else if (NeuePerson.Ausbildung is AGT) ComboBoxAusbildung.SelectedIndex = 2;
-        else if (NeuePerson.Ausbildung is TM) ComboBoxAusbildung.SelectedIndex = 3;
-        else if (NeuePerson.Ausbildung is GK) ComboBoxAusbildung.SelectedIndex = 4;
+        else if (NeuePerson.Ausbildung is TF) ComboBoxAusbildung.SelectedIndex = 2;
+        else if (NeuePerson.Ausbildung is AGT) ComboBoxAusbildung.SelectedIndex = 3;
+        else if (NeuePerson.Ausbildung is TM) ComboBoxAusbildung.SelectedIndex = 4;
+        else if (NeuePerson.Ausbildung is GK) ComboBoxAusbildung.SelectedIndex = 5;
 
     }
 
@@ -70,13 +71,16 @@ public partial class ManagePersonenDialog : Window
             case 1: //Gruppenführer
                 NeuePerson.Ausbildung = new GF();
                 break;
-            case 2: //Angriffstrupp
+            case 2: //Truppführer
+                NeuePerson.Ausbildung = new TF();
+                break;
+            case 3: //Angriffstrupp
                 NeuePerson.Ausbildung = new AGT();
                 break;
-            case 3: //Truppmann
+            case 4: //Truppmann
                 NeuePerson.Ausbildung = new TM();
                 break;
-            case 4: //Truppmann 1/2
+            case 5: //Truppmann 1/2
                 NeuePerson.Ausbildung = new GK();
                 break;
         }

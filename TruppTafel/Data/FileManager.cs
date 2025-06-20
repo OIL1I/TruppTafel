@@ -85,6 +85,9 @@ public static class FileManager
                     case "Gruppenführer":
                         ausbildung = new GF();
                         break;
+                    case "Truppführer":
+                        ausbildung = new TF();
+                        break;
                     case "Angriffstrupp":
                         ausbildung = new AGT();
                         break;
@@ -94,6 +97,7 @@ public static class FileManager
                     case "Truppmann 1/2":
                         ausbildung = new GK();
                         break;
+                    
                 }
 
                 var personvm = new PersonenTafelViewModel(lineParts[0], ausbildung);
