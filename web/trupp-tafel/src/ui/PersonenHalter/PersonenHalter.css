@@ -1,0 +1,6 @@
+.personen-halter {
+    height: 30rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}

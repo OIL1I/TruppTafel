@@ -1,0 +1,48 @@
+.personen-tafel {
+    display: flex;
+    padding: 1.2rem 0.5em;
+    border-radius: 7px;
+    border: 2px solid black;
+    justify-content: center;
+    margin: 0.15em;
+}
+
+.personen-tafel-content {
+    display: inline-block;
+    color: black;
+    background-color: white;
+    border-radius: 7px;
+    border: 2px solid black;
+    width: 100%;
+}
+
+.personen-tafel-content h1 {
+    font-size: 1.15rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    padding: 0.25em 1.2rem;
+}
+
+.Truppman1_2 {
+    background-color: darkgreen;
+}
+
+.Truppmann {
+    background-color: gray;
+}
+
+.AGT {
+    background-color: yellow;
+}
+
+.Truppführer{
+    background-color: white;
+}
+
+.Gruppenführer {
+    background-color: blue;
+}
+
+.Zugführer {
+    background-color: red;
+}

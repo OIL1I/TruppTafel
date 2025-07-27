@@ -1,0 +1,20 @@
+table{
+    color: black;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: gray;
+    padding: 0.5em;
+}
+
+th{
+    padding: 0.5em;
+    border: 1px solid black;
+    width: 25em;
+    background: white;
+}
+
+td{
+    padding: 0.5em;
+    border: 1px solid black;
+    background: white;
+}
