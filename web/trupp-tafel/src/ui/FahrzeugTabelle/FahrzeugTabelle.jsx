@@ -1,9 +1,9 @@
 import './FahrzeugTabelle.css';
-import type {Fahrzeug} from "../../lib/Fahrzeug.ts";
-import {type UniqueIdentifier, useDroppable} from "@dnd-kit/core";
+import {Fahrzeug} from "../../lib/Fahrzeug.ts";
+import {useDroppable} from "@dnd-kit/core";
 import {BesatzungsIndex} from "../../lib/Besatzungsliste.ts";
 
-export function FahrzeugTabelle({id, fahrzeug}: { id: number, fahrzeug: Fahrzeug }) {
+export function FahrzeugTabelle({id, fahrzeug}) {
     return (
         <div className={"fahrzeug-tafel"}>
             <table>
@@ -14,7 +14,7 @@ export function FahrzeugTabelle({id, fahrzeug}: { id: number, fahrzeug: Fahrzeug
                 </thead>
                 <tbody>
                 {fahrzeug.getBesatzungsListe().map((besatzung, index) => {
-                    const dropId:UniqueIdentifier = `drop-${id}-${index}`;
+                    const dropId = `drop-${id}-${index}`;
                     const {isOver, setNodeRef} = useDroppable(dropId);
 
                     return (
