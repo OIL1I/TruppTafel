@@ -5,7 +5,7 @@ import {Ausbildung} from "./lib/Ausbildung.ts";
 import {DndContext, type DragEndEvent} from "@dnd-kit/core";
 import {PersonenHalter} from "./ui/PersonenHalter/PersonenHalter.tsx";
 import {arrayMove} from "@dnd-kit/sortable";
-import {FahrzeugTabelle} from "./ui/FahrzeugTabelle/FahrzeugTabelle.jsx";
+import {FahrzeugTabelle} from "./ui/FahrzeugTabelle/FahrzeugTabelle.tsx";
 import {Besatzung, Fahrzeug} from "./lib/Fahrzeug.ts";
 
 interface PersonenItem {
