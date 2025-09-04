@@ -1,0 +1,12 @@
+﻿@page "/"
+@using web.Components.Modules
+@using web.Lib.Logic
+
+<PageTitle>Home</PageTitle>
+
+<PersonenTafel/>
+<PersonenTafel person="@(new Person("P.Schulz", Ausbildungsgrad.Gruppenfuehrer))"/>
+<FahrzeugTabelle/>
+<a href="/Config">Config</a>
+
+

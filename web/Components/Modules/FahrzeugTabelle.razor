@@ -1,0 +1,98 @@
+@rendermode InteractiveServer
+
+@using web.Lib.Logic
+@using System.Text.Json
+@inject IJSRuntime JS
+
+<div class="fahrzeug-tafel">
+  <table>
+    <thead>
+      <tr>
+        <th colSpan="2">@fahrzeug.FahrzeugName</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (string Rolle in fahrzeug.FahrzeugBesatzung.BesatzungListe)
+      {
+        <tr>
+          <td>@Rolle</td>
+          <!-- Wichtig: Referenz per Lambda capturen, damit der Key existiert -->
+          <td class="dropzone" @key="Rolle" @ref="@dropZoneRefs[Rolle]">
+            @if (belegung.TryGetValue(Rolle, out var p) && p is not null)
+            {
+              <PersonenTafel person="p" />
+            }
+          </td>
+        </tr>
+      }
+      <tr>
+          <td colspan="2">
+              <button @onclick="() => belegung.Clear()">Tabelle zurücksetzten</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+@code{
+    [Parameter] public Fahrzeug fahrzeug { get; set; } = new Fahrzeug(pName: "HLF20", pBesatzung: new Besatzung(BesatzungsArt.Gruppe));
+
+    private readonly Dictionary<string, Person?> belegung = new();
+    private readonly Dictionary<string, ElementReference> dropZoneRefs = new();
+    private readonly HashSet<string> wiredUp = new();
+
+    private IJSObjectReference? _dndModule;
+    private DotNetObjectReference<FahrzeugTabelle>? _selfRef;
+
+    protected override void OnParametersSet()
+    {
+        foreach (var r in fahrzeug.FahrzeugBesatzung.BesatzungListe)
+        {
+            if (!belegung.ContainsKey(r))
+                belegung[r] = null;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        _dndModule ??= await JS.InvokeAsync<IJSObjectReference>("import", "/js/dnd.js");
+        _selfRef ??= DotNetObjectReference.Create(this);
+
+        // Drop-Listener je Rolle genau einmal anbinden
+        foreach (var r in fahrzeug.FahrzeugBesatzung.BesatzungListe)
+        {
+            if (dropZoneRefs.TryGetValue(r, out var el) && wiredUp.Add(r))
+            {
+                await _dndModule.InvokeVoidAsync("enableDrop", el, _selfRef, r);
+            }
+        }
+    }
+    
+    [JSInvokable]
+    public void OnJsDrop(string json, string roleKey)
+    {
+        try
+        {
+            JsonSerializerOptions jso = new JsonSerializerOptions();
+            jso.IncludeFields = true;
+            var p = JsonSerializer.Deserialize<Person>(json, jso);
+            if (p is not null)
+            {
+                belegung[roleKey] = p;
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"OnJsDrop Fehler: {ex}");
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        // optional: JS-Modul freigeben
+        if (_dndModule is not null)
+            await _dndModule.DisposeAsync();
+        _selfRef?.Dispose();
+    }
+}

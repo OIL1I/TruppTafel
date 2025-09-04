@@ -1,0 +1,62 @@
+@page "/Config"
+@using web.Lib.Logic
+<div>
+    <p>Fahrzeuge</p>
+    <table>
+        <tbody>
+        @foreach (var fahrzeug in fahrzeuge)
+        {
+            <tr>
+                <td>
+                    <input type="text" value="@fahrzeug.FahrzeugName"/>
+                    <select @bind="@fahrzeug.FahrzeugBesatzung">
+                        <option value="@Besatzung.GruppenBesatzung">Gruppe</option>
+                        <option value="@Besatzung.StaffelBesatzung">Staffel</option>
+                        <option value="@Besatzung.STruppBesatzung">Selbständiger Trupp</option>
+                    </select>
+                    <button @onclick="() => fahrzeuge.Remove(fahrzeug)">Löschen</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <button @onclick="@(() => fahrzeuge.Add(new Fahrzeug("Fahrzeugname", Besatzung.STruppBesatzung)))">Fahrzeug hinzufügen</button>
+
+    <p>Personen</p>
+    <table>
+        @foreach (var person in personen)
+        {
+            <tr>
+                <td>
+                    <input type="text" value="@person.Name"/>
+                    <select @bind="@person.Ausbildung">
+                        <option value="@Ausbildungsgrad.TM1_2">Truppman 1+2</option>
+                        <option value="@Ausbildungsgrad.Truppmann">Truppman</option>
+                        <option value="@Ausbildungsgrad.AGT">AGT</option>
+                        <option value="@Ausbildungsgrad.Truppfuehrer">Truppführer</option>
+                        <option value="@Ausbildungsgrad.Gruppenfuehrer">Gruppenführer</option>
+                        <option value="@Ausbildungsgrad.Zugfuehrer">Zugführer</option>
+                    </select>
+                    <button @onclick="() => personen.Remove(person)">Löschen</button>
+                </td>
+            </tr>
+        }
+    </table>
+    <button @onclick="@(() =>  personen.Add(new Person()))">Person hinzufügen</button>
+</div>
+
+@code {
+
+    private List<Person> personen = new List<Person>()
+    {
+        new Person(),
+        new Person("P.Schulz", Ausbildungsgrad.Gruppenfuehrer)
+    };
+
+    private List<Fahrzeug> fahrzeuge = new List<Fahrzeug>()
+    {
+        new Fahrzeug("HLF20", Besatzung.GruppenBesatzung),
+        new Fahrzeug("TLF2000", Besatzung.StaffelBesatzung)
+    };
+    
+}
