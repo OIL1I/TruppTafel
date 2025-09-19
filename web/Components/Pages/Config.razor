@@ -1,35 +1,40 @@
 @page "/Config"
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
 @using web.Lib.Logic
-<div>
-    <p>Fahrzeuge</p>
-    <table>
-        <tbody>
-        @foreach (var fahrzeug in fahrzeuge)
-        {
-            <tr>
-                <td>
-                    <input type="text" value="@fahrzeug.FahrzeugName"/>
-                    <select @bind="@fahrzeug.FahrzeugBesatzung">
+
+<PageTitle>Config</PageTitle>
+
+<div class="modal-fullscreen bg-dark-subtle">
+    <div class="config-container bg-light-subtle">
+        <p>Fahrzeuge</p>
+        <ul class="list-group-flush">
+            @foreach (var fahrzeug in fahrzeuge)
+            {
+                <li @key="fahrzeug.Id" class="list-group-item d-flex align-items-center">
+                    <input class="input-group-text" type="text" @bind="@fahrzeug.FahrzeugName"/>
+                    <select class="form-select w-auto" @bind="@fahrzeug.FahrzeugBesatzung">
                         <option value="@Besatzung.GruppenBesatzung">Gruppe</option>
                         <option value="@Besatzung.StaffelBesatzung">Staffel</option>
                         <option value="@Besatzung.STruppBesatzung">Selbständiger Trupp</option>
                     </select>
-                    <button @onclick="() => fahrzeuge.Remove(fahrzeug)">Löschen</button>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-    <button @onclick="@(() => fahrzeuge.Add(new Fahrzeug("Fahrzeugname", Besatzung.STruppBesatzung)))">Fahrzeug hinzufügen</button>
-
-    <p>Personen</p>
-    <table>
-        @foreach (var person in personen)
-        {
-            <tr>
-                <td>
-                    <input type="text" value="@person.Name"/>
-                    <select @bind="@person.Ausbildung">
+                    <button class="btn btn-close" @onclick="() => fahrzeuge.Remove(fahrzeug)"/>
+                </li>
+            }
+        </ul>
+        <button class="btn btn-primary"
+                @onclick="@(() => fahrzeuge.Add(new Fahrzeug("Fahrzeugname", Besatzung.STruppBesatzung)))">Fahrzeug
+            hinzufügen
+        </button>
+    </div>
+    <div class="config-container bg-light-subtle">
+        <p>Personen</p>
+        <ul class="list-group-flush">
+            @foreach (var person in personen)
+            {
+                <li @key="person.Id" class="list-group-item d-flex align-items-center">
+                    <input class="input-group-text" type="text" @bind="@person.Name"/>
+                    <select class="form-select w-auto" @bind="@person.Ausbildung">
                         <option value="@Ausbildungsgrad.TM1_2">Truppman 1+2</option>
                         <option value="@Ausbildungsgrad.Truppmann">Truppman</option>
                         <option value="@Ausbildungsgrad.AGT">AGT</option>
@@ -37,26 +42,31 @@
                         <option value="@Ausbildungsgrad.Gruppenfuehrer">Gruppenführer</option>
                         <option value="@Ausbildungsgrad.Zugfuehrer">Zugführer</option>
                     </select>
-                    <button @onclick="() => personen.Remove(person)">Löschen</button>
-                </td>
-            </tr>
-        }
-    </table>
-    <button @onclick="@(() =>  personen.Add(new Person()))">Person hinzufügen</button>
+                    <button class="btn btn-close" @onclick="() => personen.Remove(person)"/>
+                </li>
+            }
+        </ul>
+        <button class="btn btn-primary" @onclick="@(() => personen.Add(new Person()))">Person hinzufügen</button>
+    </div>
+    <button class="btn btn-primary save-button" @onclick="SaveChanges">Zurück zur Tafel</button>
 </div>
 
 @code {
+    private List<Fahrzeug> fahrzeuge = new();
+    private List<Person> personen = new();
 
-    private List<Person> personen = new List<Person>()
+    protected override void OnInitialized()
     {
-        new Person(),
-        new Person("P.Schulz", Ausbildungsgrad.Gruppenfuehrer)
-    };
+        fahrzeuge = Global.AppData.Fahrzeuge.ToList();
+        personen = Global.AppData.Personen.ToList();
+    }
 
-    private List<Fahrzeug> fahrzeuge = new List<Fahrzeug>()
+    private void SaveChanges()
     {
-        new Fahrzeug("HLF20", Besatzung.GruppenBesatzung),
-        new Fahrzeug("TLF2000", Besatzung.StaffelBesatzung)
-    };
-    
+        Global.AppData.Fahrzeuge = fahrzeuge;
+        Global.AppData.Personen = personen;
+
+        NavigationManager.NavigateTo("/");
+    }
+
 }

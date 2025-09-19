@@ -5,7 +5,7 @@
 @inject IJSRuntime JS
 
 <div class="@person.Ausbildung personen-tafel" @ref="personEl">
-  <div class="personen-tafel-content">
+  <div class="personen-tafel-content text-center d-inline justify-content-center align-items-center">
     <h1>@person.Name</h1>
   </div>
 </div>
@@ -26,5 +26,4 @@
             await _dndModule.InvokeVoidAsync("enableDrag", personEl, payloadJson);
         }
     }
-
 }

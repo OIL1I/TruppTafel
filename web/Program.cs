@@ -1,4 +1,10 @@
+using web;
 using web.Components;
+using web.Lib.Logic;
+
+Global.AppData.Fahrzeuge.Add(new Fahrzeug("HLF20", Besatzung.GruppenBesatzung));
+Global.AppData.Personen.Add(new Person("M.Mustermann", Ausbildungsgrad.AGT));
+
 
 var builder = WebApplication.CreateBuilder(args);
 

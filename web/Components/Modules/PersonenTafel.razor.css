@@ -5,6 +5,7 @@
     border: 2px solid black;
     justify-content: center;
     margin: 0.15em;
+    min-width: 10vw;
 }
 
 .personen-tafel-content {
@@ -14,6 +15,7 @@
     border-radius: 7px;
     border: 2px solid black;
     width: 100%;
+    
 }
 
 .personen-tafel-content h1 {

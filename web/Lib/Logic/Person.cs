@@ -5,6 +5,7 @@ namespace web.Lib.Logic
     [Serializable]
     public class Person
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = "M.Mustermann";
 
         [JsonConverter(typeof(JsonNumberEnumConverter<Ausbildungsgrad>))]
@@ -12,7 +13,6 @@ namespace web.Lib.Logic
 
         public Person() { }
 
-        // optionaler Komfort-Konstruktor (wird NICHT für die Deserialisierung verwendet)
         public Person(string name, Ausbildungsgrad ausbildung)
         {
             Name = name;
