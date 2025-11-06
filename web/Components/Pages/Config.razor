@@ -9,7 +9,7 @@
     <div class="dflex flex-column justify-content-center align-items-center align-self-center">
         <p class="text-center">Passwort:</p>
         <input type="password" class="m-3" @bind="pwInput"/>
-        <button class="btn btn-primary" @onclick="LoginOnClick">Login</button>
+        <button class="btn btn-dark" @onclick="LoginOnClick">Login</button>
         @if (loginFailed)
         {
             <p class="text-center text-danger">Falsches Passwort</p>
@@ -31,11 +31,11 @@ else
                             <option value="@Besatzung.StaffelBesatzung">Staffel</option>
                             <option value="@Besatzung.STruppBesatzung">Selbständiger Trupp</option>
                         </select>
-                        <button class="btn btn-close" @onclick="() => fahrzeuge.Remove(fahrzeug)"/>
+                        <button class="btn btn-close" @onclick="() => fahrzeuge.Remove(fahrzeug)"></button>
                     </li>
                 }
             </ul>
-            <button class="btn btn-primary"
+            <button class="btn btn-outline-dark"
                     @onclick="@(() => fahrzeuge.Add(new Fahrzeug("Fahrzeugname", Besatzung.STruppBesatzung)))">Fahrzeug
                 hinzufügen
             </button>
@@ -55,13 +55,13 @@ else
                             <option value="@Ausbildungsgrad.Gruppenfuehrer">Gruppenführer</option>
                             <option value="@Ausbildungsgrad.Zugfuehrer">Zugführer</option>
                         </select>
-                        <button class="btn btn-close" @onclick="() => personen.Remove(person)"/>
+                        <button class="btn btn-close" @onclick="() => personen.Remove(person)"></button>
                     </li>
                 }
             </ul>
-            <button class="btn btn-primary" @onclick="@(() => personen.Add(new Person()))">Person hinzufügen</button>
+            <button class="btn btn-outline-dark" @onclick="@(() => personen.Add(new Person()))">Person hinzufügen</button>
         </div>
-        <button class="btn btn-primary save-button" @onclick="SaveChanges">Zurück zur Tafel</button>
+        <button class="btn btn-dark save-button" @onclick="SaveChanges">Zurück zur Tafel</button>
     </div>
 }
 
