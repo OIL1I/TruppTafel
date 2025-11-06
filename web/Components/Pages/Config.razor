@@ -10,6 +10,10 @@
         <p class="text-center">Passwort:</p>
         <input type="password" class="m-3" @bind="pwInput"/>
         <button class="btn btn-primary" @onclick="LoginOnClick">Login</button>
+        @if (loginFailed)
+        {
+            <p class="text-center text-danger">Falsches Passwort</p>
+        }
     </div>
 }
 else
@@ -65,6 +69,7 @@ else
     private List<Fahrzeug> fahrzeuge = new();
     private List<Person> personen = new();
     private bool isLoggedIn = false;
+    private bool loginFailed = false;
     //TODO: Temporäres Passwort entfernen, Passwort System
     private string tempPw = "temp_master_pw";
     private string pwInput = "";
@@ -86,7 +91,12 @@ else
     private void LoginOnClick()
     {
         if (pwInput == tempPw)
+        {
+            loginFailed = false;
             isLoggedIn = true;
+            return;
+        }
+        loginFailed = true;
     }
 
 }
