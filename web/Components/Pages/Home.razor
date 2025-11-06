@@ -17,7 +17,7 @@
         <div class="flex-column justify-content-center">
             <div class="d-flex justify-content-center m-4">
                 <p class="m-2">Sortieren:</p>
-                <select class="form-select w-auto" @bind="aktuelleOrdnung" @onchange="OnSortSelectionChanged">
+                <select class="form-select w-auto" @onchange="OnSortSelectionChanged">
                     <option value="@SortierOrdnung.Alphabet">Alphabet</option>
                     <option value="@SortierOrdnung.Ausbildung">Ausbildung</option>
                 </select>
@@ -44,7 +44,7 @@
     private List<Person> personen = new();
     private List<Fahrzeug> fahrzeuge = new();
     private bool isLoaded = false;
-    private SortierOrdnung aktuelleOrdnung = SortierOrdnung.Alphabet;
+    //private SortierOrdnung aktuelleOrdnung = SortierOrdnung.Alphabet;
     private Person besucher = new Person("Besucher", Ausbildungsgrad.TM1_2);
 
     protected override void OnInitialized()
@@ -68,7 +68,18 @@
 
     private void OnSortSelectionChanged(ChangeEventArgs e)
     {
-        switch(aktuelleOrdnung)
+        // switch(aktuelleOrdnung)
+        // {
+        //     case SortierOrdnung.Alphabet:
+        //         //TODO: Sortieren nach Alphabet
+        //         break;
+        //     case SortierOrdnung.Ausbildung:
+        //         //TODO: Sortieren nach Ausbildung
+        //         break;
+        // }
+        SortierOrdnung neueOrdnung;
+        Enum.TryParse(e.Value.ToString(), out neueOrdnung);
+        switch (neueOrdnung)
         {
             case SortierOrdnung.Alphabet:
                 //TODO: Sortieren nach Alphabet

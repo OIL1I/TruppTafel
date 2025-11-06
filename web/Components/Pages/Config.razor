@@ -4,56 +4,70 @@
 @using web.Lib.Logic
 
 <PageTitle>Config</PageTitle>
-
-<div class="modal-fullscreen bg-dark-subtle">
-    <div class="config-container bg-light-subtle">
-        <p>Fahrzeuge</p>
-        <ul class="list-group-flush">
-            @foreach (var fahrzeug in fahrzeuge)
-            {
-                <li @key="fahrzeug.Id" class="list-group-item d-flex align-items-center">
-                    <input class="input-group-text" type="text" @bind="@fahrzeug.FahrzeugName"/>
-                    <select class="form-select w-auto" @bind="@fahrzeug.FahrzeugBesatzung">
-                        <option value="@Besatzung.GruppenBesatzung">Gruppe</option>
-                        <option value="@Besatzung.StaffelBesatzung">Staffel</option>
-                        <option value="@Besatzung.STruppBesatzung">Selbständiger Trupp</option>
-                    </select>
-                    <button class="btn btn-close" @onclick="() => fahrzeuge.Remove(fahrzeug)"/>
-                </li>
-            }
-        </ul>
-        <button class="btn btn-primary"
-                @onclick="@(() => fahrzeuge.Add(new Fahrzeug("Fahrzeugname", Besatzung.STruppBesatzung)))">Fahrzeug
-            hinzufügen
-        </button>
+@if (!isLoggedIn)
+{
+    <div class="dflex flex-column justify-content-center align-items-center align-self-center">
+        <p class="text-center">Passwort:</p>
+        <input type="password" class="m-3" @bind="pwInput"/>
+        <button class="btn btn-primary" @onclick="LoginOnClick">Login</button>
     </div>
-    <div class="config-container bg-light-subtle">
-        <p>Personen</p>
-        <ul class="list-group-flush">
-            @foreach (var person in personen)
-            {
-                <li @key="person.Id" class="list-group-item d-flex align-items-center">
-                    <input class="input-group-text" type="text" @bind="@person.Name"/>
-                    <select class="form-select w-auto" @bind="@person.Ausbildung">
-                        <option value="@Ausbildungsgrad.TM1_2">Truppman 1+2</option>
-                        <option value="@Ausbildungsgrad.Truppmann">Truppman</option>
-                        <option value="@Ausbildungsgrad.AGT">AGT</option>
-                        <option value="@Ausbildungsgrad.Truppfuehrer">Truppführer</option>
-                        <option value="@Ausbildungsgrad.Gruppenfuehrer">Gruppenführer</option>
-                        <option value="@Ausbildungsgrad.Zugfuehrer">Zugführer</option>
-                    </select>
-                    <button class="btn btn-close" @onclick="() => personen.Remove(person)"/>
-                </li>
-            }
-        </ul>
-        <button class="btn btn-primary" @onclick="@(() => personen.Add(new Person()))">Person hinzufügen</button>
+}
+else
+{
+    <div class="logged_in modal-fullscreen">
+        <div class="logged_in config-container bg-light-subtle">
+            <p>Fahrzeuge</p>
+            <ul class="list-group-flush">
+                @foreach (var fahrzeug in fahrzeuge)
+                {
+                    <li @key="fahrzeug.Id" class="list-group-item d-flex align-items-center">
+                        <input class="input-group-text" type="text" @bind="@fahrzeug.FahrzeugName"/>
+                        <select class="form-select w-auto" @bind="@fahrzeug.FahrzeugBesatzung">
+                            <option value="@Besatzung.GruppenBesatzung">Gruppe</option>
+                            <option value="@Besatzung.StaffelBesatzung">Staffel</option>
+                            <option value="@Besatzung.STruppBesatzung">Selbständiger Trupp</option>
+                        </select>
+                        <button class="btn btn-close" @onclick="() => fahrzeuge.Remove(fahrzeug)"/>
+                    </li>
+                }
+            </ul>
+            <button class="btn btn-primary"
+                    @onclick="@(() => fahrzeuge.Add(new Fahrzeug("Fahrzeugname", Besatzung.STruppBesatzung)))">Fahrzeug
+                hinzufügen
+            </button>
+        </div>
+        <div class="logged_in config-container bg-light-subtle">
+            <p>Personen</p>
+            <ul class="list-group-flush">
+                @foreach (var person in personen)
+                {
+                    <li @key="person.Id" class="list-group-item d-flex align-items-center">
+                        <input class="input-group-text" type="text" @bind="@person.Name"/>
+                        <select class="form-select w-auto" @bind="@person.Ausbildung">
+                            <option value="@Ausbildungsgrad.TM1_2">Truppman 1+2</option>
+                            <option value="@Ausbildungsgrad.Truppmann">Truppman</option>
+                            <option value="@Ausbildungsgrad.AGT">AGT</option>
+                            <option value="@Ausbildungsgrad.Truppfuehrer">Truppführer</option>
+                            <option value="@Ausbildungsgrad.Gruppenfuehrer">Gruppenführer</option>
+                            <option value="@Ausbildungsgrad.Zugfuehrer">Zugführer</option>
+                        </select>
+                        <button class="btn btn-close" @onclick="() => personen.Remove(person)"/>
+                    </li>
+                }
+            </ul>
+            <button class="btn btn-primary" @onclick="@(() => personen.Add(new Person()))">Person hinzufügen</button>
+        </div>
+        <button class="btn btn-primary save-button" @onclick="SaveChanges">Zurück zur Tafel</button>
     </div>
-    <button class="btn btn-primary save-button" @onclick="SaveChanges">Zurück zur Tafel</button>
-</div>
+}
 
 @code {
     private List<Fahrzeug> fahrzeuge = new();
     private List<Person> personen = new();
+    private bool isLoggedIn = false;
+    //TODO: Temporäres Passwort entfernen, Passwort System
+    private string tempPw = "temp_master_pw";
+    private string pwInput = "";
 
     protected override void OnInitialized()
     {
@@ -67,6 +81,12 @@
         Global.AppData.Personen = personen;
 
         NavigationManager.NavigateTo("/");
+    }
+
+    private void LoginOnClick()
+    {
+        if (pwInput == tempPw)
+            isLoggedIn = true;
     }
 
 }
