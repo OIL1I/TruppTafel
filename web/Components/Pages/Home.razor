@@ -34,12 +34,6 @@
 
 
 @code {
-
-    private enum SortierOrdnung
-    {
-        Alphabet,
-        Ausbildung
-    }
     
     private List<Person> personen = new();
     private List<Fahrzeug> fahrzeuge = new();
@@ -79,14 +73,9 @@
         // }
         SortierOrdnung neueOrdnung;
         Enum.TryParse(e.Value.ToString(), out neueOrdnung);
-        switch (neueOrdnung)
-        {
-            case SortierOrdnung.Alphabet:
-                //TODO: Sortieren nach Alphabet
-                break;
-            case SortierOrdnung.Ausbildung:
-                //TODO: Sortieren nach Ausbildung
-                break;
-        }
+        Global.AktuelleOrdnung = neueOrdnung;
+        personen.Remove(besucher);
+        personen = Sortieren.Sort<Person>(personen);
+        personen.Add(besucher);
     }
 }
